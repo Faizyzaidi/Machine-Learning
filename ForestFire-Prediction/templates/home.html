@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FWI Prediction</title>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            font-family: Arial, sans-serif;
+        }
+
+        .login {
+            background: white;
+            padding: 35px 45px;
+            border-radius: 12px;
+            width: 360px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #ff512f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #dd2476;
+            transform: scale(1.03);
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-btn {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .back-btn a {
+            text-decoration: none;
+            color: #ff512f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+        <h1>🔥 FWI Prediction</h1>
+
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <input type="text" name="Temperature" placeholder="Temperature" required>
+            <input type="text" name="RH" placeholder="Relative Humidity (RH)" required>
+            <input type="text" name="Ws" placeholder="Wind Speed (Ws)" required>
+            <input type="text" name="Rain" placeholder="Rain" required>
+            <input type="text" name="FFMC" placeholder="FFMC" required>
+            <input type="text" name="DMC" placeholder="DMC" required>
+            <input type="text" name="ISI" placeholder="ISI" required>
+            <input type="text" name="Classes" placeholder="Classes (0 = Not Fire, 1 = Fire)" required>
+            <input type="text" name="Region" placeholder="Region (0 or 1)" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <h2>FWI Value: {{ result }}</h2>
+            <h3>Risk Level: {{ risk }}</h3>
+        </div>
+        {% endif %}
+
+        <div class="back-btn">
+            <a href="/">⬅ Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>
